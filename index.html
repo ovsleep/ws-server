@@ -1,0 +1,35 @@
+<html>
+<body>
+    <p id='server-time'></p>
+    <script>
+      var HOST = location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(HOST);
+      var el = document.getElementById('server-time');
+      ws.onmessage = function (event) {
+          var clients = JSON.parse(event.data);
+          var desc = '';
+          var i = 0;
+          clients.forEach((c) => {
+              desc += 'Client ' + i++ + ': ' + JSON.stringify(c) + '<br/>';
+          })
+
+          el.innerHTML = desc;
+      };
+
+      //function sendTemp() {
+      //    ws.send(JSON.stringify({ action: 'temp', value: document.getElementById('temp').value }));
+      //}
+      //function sendHum() {
+      //    ws.send(JSON.stringify({ action: 'hum', value: document.getElementById('hum').value }));
+      //}
+    </script>
+    <!--temp:
+    <input type="text" id="temp" />
+    <button name="Boton" onclick="return sendTemp();" value="Boton">Send Temp</button>
+
+    <br />
+    hum:
+    <input type="text" id="hum" />
+    <button name="Boton" onclick="return sendHum();" value="Boton">Send Hum</button>-->
+</body>
+</html>
